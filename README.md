@@ -16,7 +16,14 @@ sudo npm install
 sudo npm run build
 cd ../../
 ```
-
+### Errors:
+* If the terminal doesn't show and you have in browser error not finding files like node_modules/xterm/build/addons/attach/attach.js<br>
+It means that you didn't installed correcty xterm.js, usually because you copy pasted the entire text block from above and it asked for your sudoer password, try to repeat commands :
+    ```
+    cd node_modules/xterm/
+    sudo npm install
+    sudo npm run build
+    ```
 ## How to use :
 - Create a slide on Slides.com
 - Add in your slide HTML : 
@@ -35,10 +42,18 @@ npm run start
 - Enjoy !
     - You can access your slide using http://127.0.0.1:8000/<b>\<nameOfYourFile\></b>
 
-<br><br>
+<br>
 - You can try right now, a blank HTML Slide is available to test (demo.html)
 
 <br>
+
+## Customization :
+- You can change default shell by modifying this line in app.js :
+
+```
+var entrypoint = process.platform === 'win32' ? 'cmd.exe' : 'bash'; //You can change to your favorite shell here
+```
+
 ----
 ## Based of the work made by :
 - Reveal.js: https://github.com/hakimel/reveal.js/
