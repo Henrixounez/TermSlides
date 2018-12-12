@@ -59,7 +59,8 @@ app.post('/terminals', function (req, res) {
   term.on('data', function(data) {
     logs[term.pid] += data;
   });
-  term.write('ls -la\r');
+  if (cmd)
+    term.write(cmd + '\r');
   res.send(term.pid.toString());
   res.end();
 });
