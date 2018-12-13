@@ -51,7 +51,7 @@ app.post('/terminals', function (req, res) {
         rows: rows || 24,
         cwd: cwd,
         env: process.env
-      });
+  });
 
   console.log('Created terminal with PID: ' + term.pid);
   terminals[term.pid] = term;

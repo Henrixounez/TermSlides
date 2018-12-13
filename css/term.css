@@ -1,6 +1,6 @@
 
 .terminalWindow {
-    width: calc(100% - 4em);
+    width: calc(100% - 1em);
     height: calc(100% - 4em);
     align-self: center;
     justify-self: center;

@@ -54,8 +54,8 @@ if (!process.argv[2] && !process.argv[3]) {
                                 let term = initializedTerminals[stateName + index] = new Terminal({
                                     'macOptionIsMeta': true,
                                     'theme': {},
-                                    'cols': 20,
-                                    'rows': 25,
+                                    'cols': terminalEl[index].getAttribute('data-cols') || 20,
+                                    'rows': terminalEl[index].getAttribute('data-rows') || 20,
                                     'fontSize': terminalEl[index].getAttribute('data-fontsize') || 12
                                 });
                                 console.log(terminalEl[index])
@@ -82,7 +82,7 @@ if (!process.argv[2] && !process.argv[3]) {
                                     res.text().then(function (processId) {
                                         console.log('connecting to PID ' + processId);
                                         pid = processId;
-                                        socket = new WebSocket('ws://' + hostPort + '/terminals/' + processId);
+                                        var socket = new WebSocket('ws://' + hostPort + '/terminals/' + processId);
                                         socket.onopen = function() {
                                             term.attach(socket);
                                             term._initialized = true;
