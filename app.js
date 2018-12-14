@@ -59,8 +59,10 @@ app.post('/terminals', function (req, res) {
   term.on('data', function(data) {
     logs[term.pid] += data;
   });
-  if (cmd)
+  if (cmd) {
+    cmd = cmd.replace(/\\r/g, "\r")
     term.write(cmd + '\r');
+  }
   res.send(term.pid.toString());
   res.end();
 });

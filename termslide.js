@@ -49,6 +49,9 @@ if (!process.argv[2] && !process.argv[3]) {
                                 return;
                             }
                             for (let index = 0; index < terminalEl.length; index++) {
+                                if (initializedTerminals[stateName + index]) {
+                                    continue;
+                                }
                                 console.log('initializing terminal for section ' + stateName + '.' + index);
                                 let pid = 0;
                                 let term = initializedTerminals[stateName + index] = new Terminal({
@@ -58,8 +61,6 @@ if (!process.argv[2] && !process.argv[3]) {
                                     'rows': terminalEl[index].getAttribute('data-rows') || 20,
                                     'fontSize': terminalEl[index].getAttribute('data-fontsize') || 12
                                 });
-                                console.log(terminalEl[index])
-                                console.log(terminalEl[index].getAttribute('data-fontSize'))
                                 term.on('resize', function (size) {
                                     if (!pid) {
                                         return;
@@ -118,10 +119,16 @@ if (!process.argv[2] && !process.argv[3]) {
             }
             if (!terminals[i].closest('section').attributes['data-state'])
                 terminals[i].closest('section').setAttribute('data-state', 'terminal-' + i);
-            terminals[i].insertAdjacentHTML('beforeend', '<div class="custom fakeMenu"><div class="custom fakeButtons fakeClose"></div><div class="custom fakeButtons fakeZoom"></div></div><div class="custom fakeScreen"><div data-is-terminal ' + attributesString + ' ></div></div>');
+            terminals[i].insertAdjacentHTML('beforeend', '<div class="custom fakeMenu"><div class="custom fakeButtons fakeZoom"></div><div class="custom fakeButtons fakeClose"></div></div><div class="custom fakeScreen"><div data-is-terminal ' + attributesString + ' ></div></div>');
             terminals[i].classList.add('custom');
             terminals[i].classList.add('terminalWindow');
             terminals[i].setAttribute('style', 'margin: auto; display: inline;' + terminals[i].getAttribute('style'));
+            var siblings = terminals[i].closest('div:not(.terminal)').childNodes;
+            for (var u = 0; u < siblings.length; u++) {
+                if (siblings[u] !== terminals[i]) {
+                    siblings[u].outerHTML = '';
+                }
+            }
         }
         console.log("Serializing DOM Document ...");
         contents = doc.serialize();
