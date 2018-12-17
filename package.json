@@ -1,5 +1,5 @@
 {
-  "name": "@termslides/testing",
+  "name": "termslides",
   "version": "1.0.0",
   "description": "Add terminals into you reveal.js presentations",
   "main": "Gruntfile.js",

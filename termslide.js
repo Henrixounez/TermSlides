@@ -119,10 +119,10 @@ if (!process.argv[2] && !process.argv[3]) {
             }
             if (!terminals[i].closest('section').attributes['data-state'])
                 terminals[i].closest('section').setAttribute('data-state', 'terminal-' + i);
-            terminals[i].insertAdjacentHTML('beforeend', '<div class="custom fakeMenu"><div class="custom fakeButtons fakeZoom"></div><div class="custom fakeButtons fakeClose"></div></div><div class="custom fakeScreen"><div data-is-terminal ' + attributesString + ' ></div></div>');
+            terminals[i].insertAdjacentHTML('beforeend', '<div class="custom fakeMenu"><div class="custom fakeButtons fakeZoom"></div><div class="custom fakeButtons fakeClose"></div></div><div class="custom fakeScreen"><div data-is-terminal ' + attributesString + ' style="height:100%" ></div></div>');
             terminals[i].classList.add('custom');
             terminals[i].classList.add('terminalWindow');
-            terminals[i].setAttribute('style', 'margin: auto; display: inline;' + terminals[i].getAttribute('style'));
+            terminals[i].setAttribute('style', 'margin: auto; display: inline-block;' + terminals[i].getAttribute('style'));
             var siblings = terminals[i].closest('div:not(.terminal)').childNodes;
             for (var u = 0; u < siblings.length; u++) {
                 if (siblings[u] !== terminals[i]) {

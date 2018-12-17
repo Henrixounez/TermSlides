@@ -1,7 +1,7 @@
 
 .terminalWindow {
-    width: calc(100% - 1em);
-    height: calc(100% - 4em);
+    width: calc(100% - 0.5em);
+    height: calc(100% - 0.5em);
     align-self: center;
     justify-self: center;
     text-align: left;
@@ -72,7 +72,7 @@
   background-color: black;
   box-sizing: border-box;
   width: inherit;
-  /* height: calc(100% + 32px); */
+  height: calc(100% - 32px);
   padding: 20px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
