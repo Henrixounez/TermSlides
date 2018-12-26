@@ -23,6 +23,15 @@ if (!process.argv[2] && !process.argv[3]) {
         console.log("Adding Xterm into Reveal initialization ...");
         contents = contents.replace('Reveal.initialize({', 'var initializedTerminals = {};\n\t\t\tReveal.initialize({');
         var revealInitializeString = `
+        function minimizeTerminal(screen) {
+            if (screen.parentNode.parentNode.getElementsByClassName("fakeScreen")[0].style.display == "")
+                screen.parentNode.parentNode.getElementsByClassName("fakeScreen")[0].style.display = "none";
+            else
+                screen.parentNode.parentNode.getElementsByClassName("fakeScreen")[0].style.display = "";
+        }
+        function closeTerminal(screen) {
+            screen.parentNode.parentNode.style.display = "none";
+        }
         Reveal.initialize({
             dependencies: [
                 { src: 'plugin/markdown/marked.js' },
@@ -104,7 +113,6 @@ if (!process.argv[2] && !process.argv[3]) {
             ],
         `;
         contents = contents.replace('Reveal.initialize({', revealInitializeString);
-        // contents = contents.replace('Reveal.initialize({', 'Reveal.initialize({\ndependencies: [{ src: \'plugin/markdown/marked.js\' },{ src: \'plugin/markdown/markdown.js\' },{ src: \'plugin/notes/notes.js\', async: true },{ src: \'plugin/highlight/highlight.js\', async: true, callback: 		function() { hljs.initHighlightingOnLoad(); } },{ src: \'node_modules/xterm/build/xterm.js\', async: true, 		callback: function() {Terminal.applyAddon(attach);Terminal.applyAddon(fit);var hostPort = location.hostname + \':\' + location.port;var terminalsUrl = \'http://\' + hostPort + \'/terminals\';var startSlide = Reveal.getCurrentSlide();var sectionEls = document.querySelectorAll(\'section		[data-state^="terminal"]\');sectionEls.forEach(function(section) {var stateName = section.getAttribute(\'data-state\');var handler = function () {if (initializedTerminals[stateName]) {return;}var terminalEl = section.querySelector(\'*		[data-is-terminal]\');if (!terminalEl) {console.warn(\'section \' + stateName + \' had no 		associated terminal, ignoring\');initializedTerminals[stateName] = true;return;}console.log(\'initializing terminal for section \' + 		stateName);var pid = 0;var term = initializedTerminals[stateName] = new Terminal(		{\'macOptionIsMeta\': true,\'theme\': {},\'cols\': 200,\'rows\': 25,\'fontSize\': 12});term.on(\'resize\', function (size) {if (!pid) {return;}var cols = size.cols,rows = size.rows,url = terminalsUrl + \'/\' + pid + \'/size?cols=\' + 		cols + \'&rows=\' + rows;fetch(url, {method: \'POST\'});});term.open(terminalEl);term.setOption(\'rendererType\', \'dom\');term.setOption(\'enableBold\', \'true\');term.setOption(\'drawBoldTextInBrightColors\', \'true\');term.setOption(\'fontFamily\', \'monospace\');term.fit();Reveal.layout();var cwd = terminalEl.getAttribute(\'data-cwd\');var cmd = terminalEl.getAttribute(\'data-cmd\');fetch(terminalsUrl + \'?cols=\' + term.cols + \'&rows=\' + 		term.rows +(cwd ? \'&cwd=\' + cwd : \'\') + (cmd ? \'&cmd=\' + cmd 		: \'\'),{method: \'POST\'}).then(function (res) {res.text().then(function (processId) {console.log(\'connecting to PID \' + processId);pid = processId;socket = new WebSocket(\'ws://\' + hostPort + 		\'/terminals/\' + processId);socket.onopen = function() {term.attach(socket);term._initialized = true;term.fit();Reveal.layout();};});});};if (startSlide === section) {handler();} else {Reveal.addEventListener(stateName, handler, false);};});}}],')
         console.log("Converting HTML to DOM ...");
         doc = new JSDOM(contents);
         var terminals = doc.window.document.querySelectorAll('.terminal');
@@ -119,10 +127,19 @@ if (!process.argv[2] && !process.argv[3]) {
             }
             if (!terminals[i].closest('section').attributes['data-state'])
                 terminals[i].closest('section').setAttribute('data-state', 'terminal-' + i);
-            terminals[i].insertAdjacentHTML('beforeend', '<div class="custom fakeMenu"><div class="custom fakeButtons fakeZoom"></div><div class="custom fakeButtons fakeClose"></div></div><div class="custom fakeScreen"><div data-is-terminal ' + attributesString + ' style="height:100%" ></div></div>');
+            terminals[i].insertAdjacentHTML('beforeend', `
+                <div class="custom fakeMenu">
+                    <div class="custom fakeButtons fakeZoom" onclick='minimizeTerminal(this)'></div>
+                    <div class="custom fakeButtons fakeClose" onclick='closeTerminal(this)'></div>
+                </div>
+                <div class="custom fakeScreen">
+                    <div data-is-terminal ' + attributesString + ' style="height:100%" ></div>
+                </div>`);
             terminals[i].classList.add('custom');
             terminals[i].classList.add('terminalWindow');
             terminals[i].setAttribute('style', 'margin: auto; display: inline-block;' + terminals[i].getAttribute('style'));
+            if (terminals[i].getAttribute('data-display') != "null")
+                terminals[i].getElementsByClassName("fakeScreen")[0].style.display = terminals[i].getAttribute('data-display');
             var siblings = terminals[i].closest('div:not(.terminal)').childNodes;
             for (var u = 0; u < siblings.length; u++) {
                 if (siblings[u] !== terminals[i]) {

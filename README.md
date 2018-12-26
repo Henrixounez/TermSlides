@@ -43,7 +43,7 @@ npm run start
     - You can access your slide using http://127.0.0.1:8000/<b>\<nameOfYourFile\></b>
 
 <br>
-- You can try right now, a blank HTML Slide is available to test (demo.html)
+- You can try right now, an HTML Slide is available to test (demo.html)
 
 <br>
 
@@ -53,6 +53,20 @@ npm run start
 ```
 var entrypoint = process.platform === 'win32' ? 'cmd.exe' : 'bash'; //You can change to your favorite shell here
 ```
+
+### Optional div attributes :
+* data-cwd="\<string\>"
+    - Spawns terminal in designated folder
+* data-cmd="\<string\>"
+    - Terminal execute a command on spawn
+* data-display="none"
+    - Terminal will spawn collapsed
+* data-cols="\<string\>"
+    - Terminal columns number
+* data-rows="\<string\>"
+    - Terminal rows number
+* data-fontsize="\<string\>"
+    - Terminal font size
 
 ----
 ## Based of the work made by :
