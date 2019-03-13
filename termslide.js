@@ -133,7 +133,7 @@ if (!process.argv[2] && !process.argv[3]) {
                     <div class="custom fakeButtons fakeClose" onclick='closeTerminal(this)'></div>
                 </div>
                 <div class="custom fakeScreen">
-                    <div data-is-terminal ' + attributesString + ' style="height:100%" ></div>
+                    <div data-is-terminal ` + attributesString + ` style="height:100%" ></div>
                 </div>`);
             terminals[i].classList.add('custom');
             terminals[i].classList.add('terminalWindow');
