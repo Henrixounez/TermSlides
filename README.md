@@ -10,20 +10,8 @@ Add terminals into you reveal.js presentations
 ```
 git clone https://github.com/Henrixounez/TermSlides.git
 cd TermSlides
-sudo npm install
-cd node_modules/xterm/
-sudo npm install
-sudo npm run build
-cd ../../
+npm install
 ```
-### Errors:
-* If the terminal doesn't show and you have in browser error not finding files like node_modules/xterm/build/addons/attach/attach.js<br>
-It means that you didn't installed correcty xterm.js, usually because you copy pasted the entire text block from above and it asked for your sudoer password, try to repeat commands :
-    ```
-    cd node_modules/xterm/
-    sudo npm install
-    sudo npm run build
-    ```
 ## How to use :
 - Create a slide on Slides.com
 - Add in your slide HTML : 
