@@ -19,7 +19,7 @@ if (!process.argv[2] && !process.argv[3]) {
         contents = contents.replace('.reveal canvas', '.reveal canvas:not([class*="term"])');
         contents = contents.replace('.reveal video{margin:0;', '.reveal video{')
         console.log("Adding Xterm Modules ...");
-        contents = contents.replace('<meta name="description" content="Slides">', '<meta name="description" content="Slides">\n\t\t<link rel="stylesheet" href="css/term.css">\n\t\t<link rel="stylesheet" href="lib/css/zenburn.css">\n\t\t<link rel="stylesheet" href="node_modules/xterm/build/xterm.css" />\n\t\t<script type="module">\n\t\t  import * as attach from "./node_modules/xterm/build/addons/attach/attach.js";\n\t\t  import * as fit from "./node_modules/xterm/build/addons/fit/fit.js";</script>');
+        contents = contents.replace('<meta name="description" content="Slides">', '<meta name="description" content="Slides">\n\t\t<link rel="stylesheet" href="css/term.css">\n\t\t<link rel="stylesheet" href="lib/css/zenburn.css">\n\t\t<link rel="stylesheet" href="node_modules/xterm/dist/xterm.css" />\n\t\t<script type="module">\n\t\t  import * as attach from "./node_modules/xterm/dist/addons/attach/attach.js";\n\t\t  import * as fit from "./node_modules/xterm/dist/addons/fit/fit.js";</script>');
         console.log("Adding Xterm into Reveal initialization ...");
         contents = contents.replace('Reveal.initialize({', 'var initializedTerminals = {};\n\t\t\tReveal.initialize({');
         var revealInitializeString = `
@@ -38,7 +38,7 @@ if (!process.argv[2] && !process.argv[3]) {
                 { src: 'plugin/markdown/markdown.js' },
                 { src: 'plugin/notes/notes.js', async: true },
                 { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-                { src: 'node_modules/xterm/build/xterm.js', async: true, callback: function() {
+                { src: 'node_modules/xterm/dist/xterm.js', async: true, callback: function() {
                     Terminal.applyAddon(attach);
                     Terminal.applyAddon(fit);
                     var hostPort = location.hostname + ':' + location.port;
@@ -80,10 +80,10 @@ if (!process.argv[2] && !process.argv[3]) {
                                     fetch(url, {method: 'POST'});
                                 });
                                 term.open(terminalEl[index]);
-                                term.setOption('rendererType', 'dom');
-                                term.setOption('enableBold', 'true');
-                                term.setOption('drawBoldTextInBrightColors', 'true');
                                 term.setOption('fontFamily', 'monospace');
+                                term.setOption('enableBold', 'true');
+                                term.setOption('cursorBlink', true);
+                                term.setOption('fontSize', 13);
                                 term.fit();
                                 Reveal.layout();
                                 let cwd = terminalEl[index].getAttribute('data-cwd');

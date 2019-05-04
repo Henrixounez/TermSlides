@@ -11,6 +11,8 @@ Add terminals into you reveal.js presentations
 git clone https://github.com/Henrixounez/TermSlides.git
 cd TermSlides
 npm install
+cd node_modules/xterm/
+npm install
 ```
 ## How to use :
 - Create a slide on Slides.com
