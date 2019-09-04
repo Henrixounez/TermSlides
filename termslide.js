@@ -34,10 +34,6 @@ if (!process.argv[2] && !process.argv[3]) {
         }
         Reveal.initialize({
             dependencies: [
-                { src: 'plugin/markdown/marked.js' },
-                { src: 'plugin/markdown/markdown.js' },
-                { src: 'plugin/notes/notes.js', async: true },
-                { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
                 { src: 'node_modules/xterm/dist/xterm.js', async: true, callback: function() {
                     Terminal.applyAddon(attach);
                     Terminal.applyAddon(fit);
