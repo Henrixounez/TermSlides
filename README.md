@@ -49,6 +49,8 @@ var entrypoint = process.platform === 'win32' ? 'cmd.exe' : 'bash'; //You can ch
     - Spawns terminal in designated folder
 * data-cmd="\<string\>"
     - Terminal execute a command on spawn
+* data-cmd-nowrite="\<string\>"
+    - Write a command on spawn without executing it
 * data-display="none"
     - Terminal will spawn collapsed
 * data-cols="\<string\>"
