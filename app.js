@@ -25,6 +25,7 @@ app.post('/terminals', function (req, res) {
       rows = parseInt(req.query.rows),
       reqCwd = req.query.cwd;
   var cmd = req.query.cmd;
+  var cmdnowrite = req.query.cmdnowrite;
   var cwd = __dirname + '/terms';
   // Create parent directory, if it doesn't exist.
   if (!fs.existsSync(cwd)) {
@@ -62,6 +63,10 @@ app.post('/terminals', function (req, res) {
   if (cmd) {
     cmd = cmd.replace(/\\r/g, "\r")
     term.write(cmd + '\r');
+  }
+  if (cmdnowrite) {
+    cmdnowrite = cmdnowrite.replace(/\\r/g, "\r")
+    term.write('clear \r' + cmdnowrite)
   }
   res.send(term.pid.toString());
   res.end();

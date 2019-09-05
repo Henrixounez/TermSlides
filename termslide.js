@@ -84,7 +84,8 @@ if (!process.argv[2] && !process.argv[3]) {
                                 Reveal.layout();
                                 let cwd = terminalEl[index].getAttribute('data-cwd');
                                 let cmd = terminalEl[index].getAttribute('data-cmd');
-                                fetch(terminalsUrl + '?cols=' + term.cols + '&rows=' + term.rows +(cwd ? '&cwd=' + cwd : '') + (cmd ? '&cmd=' + cmd : ''),{method: 'POST'}).then(function (res) {
+                                let cmdnowrite = terminalEl[index].getAttribute('data-cmd-nowrite');
+                                fetch(terminalsUrl + '?cols=' + term.cols + '&rows=' + term.rows +(cwd ? '&cwd=' + cwd : '') + (cmd ? '&cmd=' + cmd : '') + (cmdnowrite ? '&cmdnowrite=' + cmdnowrite : ''),{method: 'POST'}).then(function (res) {
                                     res.text().then(function (processId) {
                                         console.log('connecting to PID ' + processId);
                                         pid = processId;
