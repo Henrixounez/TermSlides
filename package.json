@@ -25,7 +25,7 @@
     "grunt-retire": "^1.0.8",
     "grunt-sass": "^3.0.2",
     "grunt-zip": "^0.17.1",
-    "jsdom": "^13.0.0",
+    "jsdom": "^16.5.0",
     "mustache": "^2.3.0",
     "node-pty": "^0.7.2",
     "serve-static": "^1.13.2",
